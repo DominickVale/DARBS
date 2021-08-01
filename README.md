@@ -1,4 +1,4 @@
-# Luke's Auto-Rice Bootstrapping Scripts (LARBS)
+# Dominick's Auto-Rice Bootstrapping Scripts (DARBS)
 
 ## Installation:
 
@@ -10,6 +10,13 @@ sh larbs.sh
 ```
 
 That's it.
+
+## What is DARBS?
+DARBS is simply my fork of the amazing LARBS (from Luke Smith). The only differences are:
+1. My version assumes it's being run on a default Manjaro i3 community edition installation
+2. You are a web developer
+3. Obviously expect some different configurations (which will be reflected in the docs)
+4. Probably less radical about suckless software
 
 ## What is LARBS?
 
