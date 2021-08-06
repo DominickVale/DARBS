@@ -14,7 +14,7 @@ while getopts ":a:r:b:p:h" o; do case "${o}" in
 	*) printf "Invalid option: -%s\\n" "$OPTARG" && exit 1 ;;
 esac done
 
-[ -z "$dotfilesrepo" ] && dotfilesrepo="https://github.com/lukesmithxyz/voidrice.git"
+[ -z "$dotfilesrepo" ] && dotfilesrepo="https://github.com/DominickVale/voidrice"
 [ -z "$progsfile" ] && progsfile="progs.csv"
 [ -z "$aurhelper" ] && aurhelper="paru"
 [ -z "$repobranch" ] && repobranch="master"
@@ -136,9 +136,14 @@ putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwrit
 	sudo -u "$name" cp -rfT "$dir" "$2"
 	}
 
-systembeepoff() { dialog --infobox "Getting rid of that retarded error beep sound..." 10 50
+systembeepoff() {
+	dialog --infobox "Getting rid of that retarded error beep sound..." 10 50
 	rmmod pcspkr
 	echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf ;}
+
+installnvm(){
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+}
 
 finalize(){ \
 	dialog --infobox "Preparing welcome message..." 4 50
@@ -200,12 +205,13 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 # and all build dependencies are installed.
 installationloop
 
+dialog --title "DARBS Installation" --infobox "Installing nvm (Node Version Manager)" 5 70
+installnvm
 dialog --title "DARBS Installation" --infobox "Finally, installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
 yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
 
 # Install the dotfiles in the user's home directory
 putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
-rm -f "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
 # Create default urls file if none exists.
 [ ! -f "/home/$name/.config/newsboat/urls" ] && echo "http://lukesmith.xyz/rss.xml
 https://notrelated.libsyn.com/rss
