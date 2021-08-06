@@ -142,7 +142,13 @@ systembeepoff() {
 	echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf ;}
 
 installnvm(){
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+	NVM_DIR="/home/$name/.nvm"
+	sudo -u "$name" git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+	cd "$NVM_DIR"
+	sudo -u "$name" git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)` && \. "$NVM_DIR/nvm.sh"
+
+	grep -qF '# This loads nvm' /home/$name/.config/zsh/.zshrc || echo 'export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm' >> /home/$name/.config/zsh/.zshrc
 }
 
 finalize(){ \
@@ -205,8 +211,6 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 # and all build dependencies are installed.
 installationloop
 
-dialog --title "DARBS Installation" --infobox "Installing nvm (Node Version Manager)" 5 70
-installnvm
 dialog --title "DARBS Installation" --infobox "Finally, installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
 yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
 
@@ -226,6 +230,9 @@ systembeepoff
 # Make zsh the default shell for the user.
 chsh -s /bin/zsh "$name" >/dev/null 2>&1
 sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
+
+dialog --title "DARBS Installation" --infobox "Installing nvm (Node Version Manager) with the latest node version" 5 70
+installnvm
 
 # dbus UUID must be generated for Artix runit.
 dbus-uuidgen > /var/lib/dbus/machine-id
