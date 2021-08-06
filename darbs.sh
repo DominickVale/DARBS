@@ -151,6 +151,11 @@ installnvm(){
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm' >> /home/$name/.config/zsh/.zshrc
 }
 
+installohmyzsh(){
+	sudo -u "$name" git clone https://github.com/ohmyzsh/ohmyzsh.git /home/$name/.config/oh-my-zsh
+	sudo -u "$name" git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-/home/$name/.config/oh-my-zsh/custom}/themes/powerlevel10k
+}
+
 finalize(){ \
 	dialog --infobox "Preparing welcome message..." 4 50
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Dominick" 12 80
@@ -211,7 +216,7 @@ manualinstall $aurhelper || error "Failed to install AUR helper."
 # and all build dependencies are installed.
 installationloop
 
-dialog --title "DARBS Installation" --infobox "Finally, installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
+dialog --title "DARBS Installation" --infobox "Installing \`libxft-bgra\` to enable color emoji in suckless software without crashes." 5 70
 yes | sudo -u "$name" $aurhelper -S libxft-bgra-git >/dev/null 2>&1
 
 # Install the dotfiles in the user's home directory
@@ -233,6 +238,9 @@ sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
 
 dialog --title "DARBS Installation" --infobox "Installing nvm (Node Version Manager) with the latest node version" 5 70
 installnvm
+
+dialog --title "DARBS Installation" --infobox "Installing oh my zsh along p10k" 5 70
+installohmyzsh
 
 # dbus UUID must be generated for Artix runit.
 dbus-uuidgen > /var/lib/dbus/machine-id
