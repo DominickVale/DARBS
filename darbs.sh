@@ -157,6 +157,14 @@ installohmyzsh(){
 	sudo -u "$name" git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-/home/$name/.config/oh-my-zsh/custom}/themes/powerlevel10k
 }
 
+installfonts(){
+	cd /tmp
+	mkdir fonts && cd fonts
+	wget -qO- "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Ubuntu.zip" | bsdtar -xvf-
+	wget -qO- "https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/UbuntuMono.zip" | bsdtar -xvf-
+	find . -iname "*.ttf" -not -iname "*Windows Compatible.ttf" -execdir install -Dm644 {} "/usr/share/fonts/TTF/{}" \;
+}
+
 finalize(){ \
 	dialog --infobox "Preparing welcome message..." 4 50
 	dialog --title "All done!" --msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Dominick" 12 80
@@ -239,6 +247,9 @@ sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
 
 dialog --title "DARBS Installation" --infobox "Installing nvm (Node Version Manager) with the latest node version" 5 70
 installnvm
+
+dialog --title "DARBS Installation" --infobox "Installing some more fonts" 5 70
+installfonts
 
 dialog --title "DARBS Installation" --infobox "Installing oh my zsh along p10k" 5 70
 installohmyzsh
