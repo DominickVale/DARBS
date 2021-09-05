@@ -6,6 +6,7 @@
 A,lf-git,"is an extensive terminal file manager that everyone likes."
 ,bc,"is used for a dropdown calculator."
 ,xcompmgr,"is for transparency and removing screen-tearing."
+A,picom,"a more maintained and better x compositor"
 ,xorg-xprop,"is a tool for detecting window properties."
 ,arandr,"allows the user to customize monitor arrangements."
 ,dosfstools,"allows your computer to access dos-like filesystems."
