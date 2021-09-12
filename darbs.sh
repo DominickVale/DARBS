@@ -235,6 +235,7 @@ chsh -s /bin/zsh "$name" >/dev/null 2>&1
 sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
 
 dialog --title "DARBS Installation" --infobox "Installing the latest node version" 5 70
+source /usr/share/nvm/init-nvm.sh
 nvm install node
 
 dialog --title "DARBS Installation" --infobox "Installing some more fonts" 5 70
