@@ -244,6 +244,9 @@ installfonts
 dialog --title "DARBS Installation" --infobox "Installing oh my zsh along p10k" 5 70
 installohmyzsh
 
+dialog --title "DARBS Installation" --infobox "Compiling polybar-dwm-module" 5 70
+sudo -u "$name" yes | sh /home/$name/.local/src/polybar-dwm-module/build.sh
+
 # dbus UUID must be generated for Artix runit.
 dbus-uuidgen > /var/lib/dbus/machine-id
 
