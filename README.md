@@ -2,11 +2,10 @@
 
 ## Installation:
 
-On an Arch-based distribution as root, run the following:
+On an Arch-based distribution (Manjaro for 100% support) as root, run the following:
 
 ```
-curl -LO larbs.xyz/larbs.sh
-sh larbs.sh
+sh darbs.sh
 ```
 
 That's it.
