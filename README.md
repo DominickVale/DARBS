@@ -2,7 +2,7 @@
 
 ## Installation:
 
-On an Arch-based distribution (Manjaro for 100% support) as root, run the following:
+On an Arch-based distribution (EndeavourOS-sway for 100% support) as root, run the following:
 
 ```
 sh darbs.sh
@@ -12,7 +12,7 @@ That's it.
 
 ## What is DARBS?
 DARBS is simply my fork of the amazing LARBS (from Luke Smith). The only differences are:
-1. My version assumes it's being run on a default Manjaro i3 community edition installation
+1. My version assumes it's being run on a default EndeavourOS-sway community edition installation
 2. You are a web developer
 3. Obviously expect some different configurations (which will be reflected in the docs)
 4. Probably less radical about suckless software
